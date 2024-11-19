@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $user_id
  * @property string $name
  * @property string $type
+ * @property string $currency
  * @property Collection<Transaction> $transaction
  * */
 class Account extends Model implements HasUser, HasMutable
@@ -31,6 +32,7 @@ class Account extends Model implements HasUser, HasMutable
         'user_id',
         'name',
         'type',
+        'currency',
     ];
 
     protected $guarded = [

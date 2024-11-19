@@ -4,6 +4,7 @@ namespace App\Actions\Account;
 
 use App\Concerns\Base\ValidationInput;
 use App\Enums\Account\AccountType;
+use App\Enums\Account\Currency;
 use App\Models\Account\Account;
 use App\Models\User;
 use Illuminate\Validation\Rule;
@@ -36,6 +37,7 @@ class CreateAccount extends BaseAction
             rules: [
                 'name' => ['required', 'string'],
                 'type' => ['required', 'string', Rule::in(AccountType::values())],
+                'currency' => ['required', 'string', Rule::in(Currency::values())],
             ]
         );
         return $this;

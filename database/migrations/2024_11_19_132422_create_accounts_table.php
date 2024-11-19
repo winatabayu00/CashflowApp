@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('balance', 15)->default(0);
             $table->string('type');
+            $table->string('currency');
             $table->timestamps();
         });
     }
