@@ -34,6 +34,7 @@ enum ResponseCode implements OnResponse
     case ERR_INVALID_LOGIN_METHOD;
     case ERR_INSUFFICIENT_AMOUNT;
     case ERR_INVALID_ACTION;
+    case ERR_QUERY_EXCEPTION;
 
     /**
      * Determine httpCode from response code.
@@ -57,6 +58,7 @@ enum ResponseCode implements OnResponse
             self::ERR_ENTITY_NOT_FOUND,
             self::ERR_ROUTE_NOT_FOUND => Response::HTTP_NOT_FOUND,
 
+            self::ERR_QUERY_EXCEPTION,
             self::ERR_UNKNOWN => Response::HTTP_INTERNAL_SERVER_ERROR,
 
             default => Response::HTTP_BAD_REQUEST
