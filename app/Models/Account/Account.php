@@ -2,7 +2,9 @@
 
 namespace App\Models\Account;
 
+use App\Concerns\Transactional\Mutation\Mutable;
 use App\Concerns\User\InteractsWithUser;
+use App\Contracts\Transactional\Mutation\HasMutable;
 use App\Contracts\User\HasUser;
 use App\Models\Model;
 use App\Models\Transaction\Transaction;
@@ -17,10 +19,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $type
  * @property Collection<Transaction> $transaction
  * */
-class Account extends Model implements HasUser
+class Account extends Model implements HasUser, HasMutable
 {
     use HasUuids;
     use InteractsWithUser;
+    use Mutable;
 
     protected $table = 'accounts';
 
@@ -44,5 +47,19 @@ class Account extends Model implements HasUser
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class, 'account_id');
+    }
+
+    public function freshLock(array|string $with = []): mixed
+    {
+        return $this->newQueryWithoutScopes()
+            ->with($with)
+            ->where($this->getKeyName(), $this->getKey())
+            ->lockForUpdate()
+            ->first();
+    }
+
+    public function allowNegativeAmount(): bool
+    {
+        return true;
     }
 }

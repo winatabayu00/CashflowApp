@@ -11,5 +11,4 @@ enum TransactionType: string
     use Options;
     case INCOME = 'income';
     case EXPENSE = 'expense';
-    case TRANSFER = 'transfer';
 }
