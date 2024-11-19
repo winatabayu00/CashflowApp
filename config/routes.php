@@ -37,6 +37,16 @@ return [
             'middleware' => 'api',
             'prefix' => 'api',
         ],
+        'app' => [
+            'middleware' => ['web', 'auth'],
+            'prefix' => 'app',
+            'as' => 'app',
+        ],
+        'api-options' => [
+            'middleware' => ['api'],
+            'prefix' => 'api/options',
+            'as' => 'api-options',
+        ],
     ],
 
     /*
@@ -51,8 +61,17 @@ return [
 
     'web' => [
         /** @inject web **/
+
     ],
     'api' => [
         /** @inject api **/
+    ],
+    'app' => [
+        /** @inject app **/
+        App\Http\Controllers\App\Account\AccountController::class,
+    ],
+    'api-options' => [
+        App\Http\Controllers\Api\SelectOption\GlobalSelectOptionController::class,
+        /** @inject api-options **/
     ],
 ];
