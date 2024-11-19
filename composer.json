@@ -14,7 +14,8 @@
         "winatabayu00/package-based": "^1.0",
         "winatabayu00/response": "^1.0",
         "league/flysystem-aws-s3-v3": "^3.0",
-        "veelasky/laravel-hashid": "^3.1"
+        "veelasky/laravel-hashid": "^3.1",
+        "dentro/laravel-patcher": "^1.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
