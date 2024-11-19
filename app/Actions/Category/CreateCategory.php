@@ -46,10 +46,10 @@ class CreateCategory extends BaseAction
     {
         $input = Category::getFillableAttribute($this->validatedData);
         $input['user_id'] = $this->user->id;
-        $account = new Category();
-        $account->fill($input);
-        $account->save();
+        $category = new Category();
+        $category->fill($input);
+        $category->save();
 
-        return $account;
+        return $category;
     }
 }
