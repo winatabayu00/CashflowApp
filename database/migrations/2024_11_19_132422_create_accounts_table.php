@@ -18,7 +18,7 @@ return new class extends Migration
                 ->onDelete('restrict');
             $table->string('name');
             $table->decimal('balance', 15)->default(0);
-            $table->string('type', 15);
+            $table->string('type');
             $table->timestamps();
         });
     }

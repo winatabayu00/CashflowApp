@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Actions\Account;
+namespace App\Actions\Category;
 
 use App\Concerns\Base\ValidationInput;
-use App\Enums\Account\AccountType;
-use App\Models\Account\Account;
+use App\Enums\Category\CategoryType;
+use App\Models\Category\Category;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Winata\PackageBased\Abstracts\BaseAction;
 
-class CreateAccount extends BaseAction
+class CreateCategory extends BaseAction
 {
     use ValidationInput;
 
@@ -35,18 +35,18 @@ class CreateAccount extends BaseAction
             inputs: $this->inputs,
             rules: [
                 'name' => ['required', 'string'],
-                'type' => ['required', 'string', Rule::in(AccountType::values())],
+                'type' => ['required', 'string', Rule::in(CategoryType::values())],
             ]
         );
         return $this;
     }
 
     public
-    function handle(): Account
+    function handle(): Category
     {
-        $input = Account::getFillableAttribute($this->validatedData);
+        $input = Category::getFillableAttribute($this->validatedData);
         $input['user_id'] = $this->user->id;
-        $account = new Account();
+        $account = new Category();
         $account->fill($input);
         $account->save();
 

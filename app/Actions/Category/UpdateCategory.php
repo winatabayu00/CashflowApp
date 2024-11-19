@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Actions\Account;
+namespace App\Actions\Category;
 
 use App\Concerns\Base\ValidationInput;
-use App\Enums\Account\AccountType;
-use App\Models\Account\Account;
-use App\Models\User;
+use App\Enums\Category\CategoryType;
+use App\Models\Category\Category;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Winata\PackageBased\Abstracts\BaseAction;
 
-class CreateAccount extends BaseAction
+class UpdateCategory extends BaseAction
 {
     use ValidationInput;
 
     public function __construct(
-        public User  $user,
-        public array $inputs,
-        public bool  $usingDBTransaction = false
+        public Category $category,
+        public array    $inputs,
+        public bool     $usingDBTransaction = false
 
     )
     {
@@ -35,21 +34,22 @@ class CreateAccount extends BaseAction
             inputs: $this->inputs,
             rules: [
                 'name' => ['required', 'string'],
-                'type' => ['required', 'string', Rule::in(AccountType::values())],
+                'type' => ['required', 'string', Rule::in(CategoryType::values())],
             ]
         );
         return $this;
     }
 
+    /**
+     * @return Category
+     */
     public
-    function handle(): Account
+    function handle(): Category
     {
-        $input = Account::getFillableAttribute($this->validatedData);
-        $input['user_id'] = $this->user->id;
-        $account = new Account();
-        $account->fill($input);
-        $account->save();
+        $input = Category::getFillableAttribute($this->validatedData);
+        $this->category->fill($input);
+        $this->category->save();
 
-        return $account;
+        return $this->category;
     }
 }

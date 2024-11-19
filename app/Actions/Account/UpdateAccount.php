@@ -40,6 +40,9 @@ class UpdateAccount extends BaseAction
         return $this;
     }
 
+    /**
+     * @return Account
+     */
     public
     function handle(): Account
     {

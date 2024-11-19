@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\SelectOption;
 
 use App\Enums\Account\AccountType;
+use App\Enums\Category\CategoryType;
 use App\Http\Controllers\Api\Controller;
 use Dentro\Yalr\Attributes;
 use Illuminate\Http\Request;
@@ -17,6 +18,21 @@ class GlobalSelectOptionController extends Controller
         $accountTypes = AccountType::options();
 
         $data = collect($accountTypes)
+            ->map(function ($value, $key) {
+                return [
+                    'id' => $key,
+                    'name' => $value,
+                ];
+            });
+        return $this->response($data);
+    }
+
+    #[Attributes\Get(uri: 'category-types')]
+    public function categoryTypes(Request $request): \Winata\Core\Response\Http\Response
+    {
+        $categoryTypes = CategoryType::options();
+
+        $data = collect($categoryTypes)
             ->map(function ($value, $key) {
                 return [
                     'id' => $key,
