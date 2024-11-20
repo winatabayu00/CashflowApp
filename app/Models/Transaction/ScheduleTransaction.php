@@ -10,21 +10,22 @@ use App\Models\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Facades\Date;
 
 /**
  * @property string $id
  * @property string $user_id
  * @property string $account_id
  * @property string $category_id
- * @property float $amount
- * @property string $description
- * @property Date $date
- * @property string $type
+ * @property float $transaction_amount
+ * @property string $transaction_description
+ * @property string $transaction_type
+ * @property string $schedule_type
+ * @property \DateTimeInterface $last_executed
+ * @property string $status
  * @property Account $account
  * @property Category $category
  * */
-class Transaction extends Model implements HasUser
+class ScheduleTransaction extends Model implements HasUser
 {
     use HasUuids;
     use InteractsWithUser;
@@ -35,14 +36,16 @@ class Transaction extends Model implements HasUser
         'user_id',
         'account_id',
         'category_id',
-        'amount',
-        'description',
-        'date',
-        'type',
+        'transaction_amount',
+        'transaction_description',
+        'transaction_type',
+        'schedule_type',
+        'last_executed',
+        'status',
     ];
 
     protected $casts = [
-        'amount' => 'float',
+        'transaction_amount' => 'float',
     ];
 
     public function transaction(): MorphTo

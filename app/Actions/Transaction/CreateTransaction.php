@@ -3,6 +3,7 @@
 namespace App\Actions\Transaction;
 
 use App\Concerns\Base\ValidationInput;
+use App\Contracts\Transaction\HasTransaction;
 use App\Enums\Transaction\TransactionType;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
@@ -15,9 +16,10 @@ class CreateTransaction extends BaseAction
     use ValidationInput;
 
     public function __construct(
-        public User  $user,
-        public array $inputs,
-        public bool  $usingDBTransaction = false
+        public User            $user,
+        public array           $inputs,
+        public ?HasTransaction $transaction = null,
+        public bool            $usingDBTransaction = false
     )
     {
         parent::__construct();
@@ -54,6 +56,9 @@ class CreateTransaction extends BaseAction
         $input['user_id'] = $this->user->id;
         $transaction = new Transaction();
         $transaction->fill($input);
+        if ($this->transaction instanceof HasTransaction) {
+            $transaction->transaction()->associate($this->transaction);
+        }
         $transaction->save();
 
         return $transaction;

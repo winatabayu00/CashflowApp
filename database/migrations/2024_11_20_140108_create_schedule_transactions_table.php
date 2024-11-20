@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('scheduled_transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignIdFor(\App\Models\User::class, 'user_id')
                 ->constrained()
@@ -22,11 +22,12 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Category\Category::class, 'category_id')
                 ->constrained()
                 ->onDelete('restrict');
-            $table->nullableUuidMorphs('transaction');
-            $table->decimal('amount', 15);
-            $table->text('description');
-            $table->date('date');
-            $table->string('type');
+            $table->decimal('transaction_amount', 15);
+            $table->text('transaction_description');
+            $table->string('transaction_type');
+            $table->string('schedule_type');
+            $table->timestamp('last_executed')->nullable();
+            $table->string('status')->default(\App\Enums\ScheduleTransaction\ScheduleStatus::ACTIVE->value);
             $table->timestamps();
         });
     }
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('scheduled_transactions');
     }
 };
