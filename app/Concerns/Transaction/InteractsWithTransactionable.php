@@ -3,7 +3,6 @@
 namespace App\Concerns\Transaction;
 
 use App\Models\Transaction\Transaction;
-use App\Models\Transactional\Invoice;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait InteractsWithTransactionable
@@ -11,7 +10,7 @@ trait InteractsWithTransactionable
     /**
      * @return MorphMany
      */
-    public function transaction(): MorphMany
+    public function transactions(): MorphMany
     {
         return $this->morphMany(Transaction::class, 'transaction', 'transaction_type', 'transaction_id');
     }

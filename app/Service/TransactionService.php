@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Actions\Transaction\CreateTransaction;
 use App\Concerns\Transactional\Mutation\InteractsWithMutation;
+use App\Contracts\Transaction\HasTransaction;
 use App\Enums\Transaction\TransactionType;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
@@ -25,7 +26,7 @@ class TransactionService extends BaseService
      * @throws BaseException
      * @throws ValidationException
      */
-    public function create(User $user, array $inputs): Transaction
+    public function create(User $user, array $inputs, ?HasTransaction $transaction = null): Transaction
     {
         $validated = $this->validate(
             inputs: $inputs,
@@ -41,7 +42,7 @@ class TransactionService extends BaseService
 
         DB::beginTransaction();
         // create transaction
-        $transaction = (new CreateTransaction(user: $user, inputs: $inputs))
+        $transaction = (new CreateTransaction(user: $user, inputs: $inputs, transaction: $transaction))
             ->handle();
         $transaction->loadMissing('account');
 

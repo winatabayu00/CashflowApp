@@ -26,6 +26,9 @@ return new class extends Migration
             $table->text('transaction_description');
             $table->string('transaction_type');
             $table->string('schedule_type');
+            $table->string('schedule_executed_at')->nullable();
+            $table->integer('repeat')->default(0);
+            $table->integer('maximum_repeat')->default(0);
             $table->timestamp('last_executed')->nullable();
             $table->string('status')->default(\App\Enums\ScheduleTransaction\ScheduleStatus::ACTIVE->value);
             $table->timestamps();

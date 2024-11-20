@@ -2,7 +2,9 @@
 
 namespace App\Models\Transaction;
 
+use App\Concerns\Transaction\InteractsWithTransactionable;
 use App\Concerns\User\InteractsWithUser;
+use App\Contracts\Transaction\HasTransaction;
 use App\Contracts\User\HasUser;
 use App\Models\Account\Account;
 use App\Models\Category\Category;
@@ -20,17 +22,20 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string $transaction_description
  * @property string $transaction_type
  * @property string $schedule_type
+ * @property integer $repeat
+ * @property integer $maximum_repeat
  * @property \DateTimeInterface $last_executed
  * @property string $status
  * @property Account $account
  * @property Category $category
  * */
-class ScheduleTransaction extends Model implements HasUser
+class ScheduleTransaction extends Model implements HasUser, HasTransaction
 {
     use HasUuids;
     use InteractsWithUser;
+    use InteractsWithTransactionable;
 
-    protected $table = 'transactions';
+    protected $table = 'scheduled_transactions';
 
     protected $fillable = [
         'user_id',
@@ -40,6 +45,9 @@ class ScheduleTransaction extends Model implements HasUser
         'transaction_description',
         'transaction_type',
         'schedule_type',
+        'schedule_executed_at',
+        'repeat',
+        'maximum_repeat',
         'last_executed',
         'status',
     ];
