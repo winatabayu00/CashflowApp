@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\SelectOption;
 
 use App\Enums\Account\AccountType;
+use App\Enums\Budget\BudgetStatus;
 use App\Enums\Category\CategoryType;
 use App\Enums\ScheduleTransaction\ScheduleStatus;
 use App\Enums\ScheduleTransaction\ScheduleType;
@@ -84,9 +85,9 @@ class GlobalSelectOptionController extends Controller
     #[Attributes\Get(uri: 'schedule-types')]
     public function scheduleTypes(): \Winata\Core\Response\Http\Response
     {
-        $categoryTypes = ScheduleType::options();
+        $scheduleTypes = ScheduleType::options();
 
-        $data = collect($categoryTypes)
+        $data = collect($scheduleTypes)
             ->map(function ($value, $key) {
                 return [
                     'id' => $key,
@@ -103,9 +104,28 @@ class GlobalSelectOptionController extends Controller
     #[Attributes\Get(uri: 'schedule-status')]
     public function scheduleStatus(): \Winata\Core\Response\Http\Response
     {
-        $transactionTypes = ScheduleStatus::options();
+        $scheduleStatus = ScheduleStatus::options();
 
-        $data = collect($transactionTypes)
+        $data = collect($scheduleStatus)
+            ->map(function ($value, $key) {
+                return [
+                    'id' => $key,
+                    'name' => $value,
+                ];
+            });
+        return $this->response($data);
+    }
+
+    /**
+     * @param
+     * @return Response
+     */
+    #[Attributes\Get(uri: 'budget-status')]
+    public function budgetStatus(): \Winata\Core\Response\Http\Response
+    {
+        $budgetStatus = BudgetStatus::options();
+
+        $data = collect($budgetStatus)
             ->map(function ($value, $key) {
                 return [
                     'id' => $key,

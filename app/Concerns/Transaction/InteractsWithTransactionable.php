@@ -16,7 +16,7 @@ trait InteractsWithTransactionable
     }
 
     /**
-     * Get mutable id.
+     * Get transaction id.
      */
     public function getTransactionId(): int|string
     {
