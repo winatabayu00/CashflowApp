@@ -31,6 +31,7 @@ return new class extends Migration
             $table->integer('maximum_repeat')->default(0);
             $table->timestamp('last_executed')->nullable();
             $table->string('status')->default(\App\Enums\ScheduleTransaction\ScheduleStatus::ACTIVE->value);
+            $table->string('action')->default(\App\Enums\ScheduleTransaction\ScheduleStatus::ACTIVE->value);
             $table->timestamps();
         });
     }

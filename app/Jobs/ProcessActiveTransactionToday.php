@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Enums\ScheduleTransaction\ScheduleAction;
 use App\Models\Transaction\ScheduleTransaction;
+use App\Notifications\SendNotification;
 use App\Service\TransactionService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -31,9 +33,7 @@ class ProcessActiveTransactionToday implements ShouldQueue
         $this->scheduleTransaction->last_executed = now();
         $this->scheduleTransaction->save();
 
-        $this->scheduleTransaction->loadMissing('user');
-
-        $transactionService = new TransactionService();
+        $user = $this->scheduleTransaction->getUser();
         $newTransactionData = [
             'account_id' => $this->scheduleTransaction->account_id,
             'category_id' => $this->scheduleTransaction->category_id,
@@ -42,6 +42,27 @@ class ProcessActiveTransactionToday implements ShouldQueue
             'date' => now(),
             'type' => $this->scheduleTransaction->transaction_type,
         ];
-        $transactionService->create(user: $this->scheduleTransaction->getUser(), inputs: $newTransactionData, transaction: $this->scheduleTransaction);
+
+        if ($this->scheduleTransaction->action == ScheduleAction::TRIGGER_TRANSACTION->value){
+            $this->scheduleTransaction->loadMissing('user');
+
+            $transactionService = new TransactionService();
+
+            $transactionService->create(user: $user, inputs: $newTransactionData, transaction: $this->scheduleTransaction);
+        }else if ($this->scheduleTransaction->action == ScheduleAction::CREATE_NOTIFICATION->value){
+            $user->notify(
+                new SendNotification(
+                    title: 'Transaksi butuh tindakan',
+                    message: 'Transaksi terjadwal belum ada tindakan',
+                    metadata: [
+                        'schedule_transaction_id' => $this->scheduleTransaction->id,
+                        'amount' => $newTransactionData['amount'],
+                        'description' => $newTransactionData['description'],
+                        'type' => $newTransactionData['type'],
+                    ]
+                )
+            );
+        }
+
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Actions\ScheduleTransaction;
 
 use App\Concerns\Base\ValidationInput;
+use App\Enums\ScheduleTransaction\ScheduleAction;
 use App\Enums\ScheduleTransaction\ScheduleStatus;
 use App\Enums\ScheduleTransaction\ScheduleType;
 use App\Enums\Transaction\TransactionType;
@@ -41,6 +42,7 @@ class CreateScheduleTransaction extends BaseAction
                 'transaction_description' => ['required', 'string'],
                 'transaction_type' => ['required', 'string', Rule::in(TransactionType::values())],
                 'schedule_type' => ['required', 'string', Rule::in(ScheduleType::values())],
+                'action' => ['required', 'string', Rule::in(ScheduleAction::values())],
                 'status' => ['nullable', 'string', Rule::in(ScheduleStatus::values())],
             ]
         );

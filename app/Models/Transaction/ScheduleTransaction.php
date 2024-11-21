@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property integer $maximum_repeat
  * @property \DateTimeInterface $last_executed
  * @property string $status
+ * @property string $action
  * @property Account $account
  * @property Category $category
  * */
@@ -50,6 +51,7 @@ class ScheduleTransaction extends Model implements HasUser, HasTransaction
         'maximum_repeat',
         'last_executed',
         'status',
+        'action',
     ];
 
     protected $casts = [
