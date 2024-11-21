@@ -2,8 +2,7 @@
 
 use Dentro\Patcher\Patch;
 
-return new class extends Patch
-{
+return new class extends Patch {
 
     public bool $isPerpetual = false;
 
@@ -15,63 +14,37 @@ return new class extends Patch
     public function patch(): void
     {
         $user = \App\Models\User::query()->firstOrFail();
-        $account = \App\Models\Account\Account::query()->firstOrFail();
-        $category = \App\Models\Category\Category::query()->firstOrFail();
-        $cashflows = [
-            [
-                'account_id' => $account->id,
-                'category_id' => $category->id,
-                'amount' => 1000000,
-                'description' => 'gaji',
-                'date' => now()->toDateString(),
-                'type' => \App\Enums\Transaction\TransactionType::INCOME->value,
-            ],
-            [
-                'account_id' => $account->id,
-                'category_id' => $category->id,
-                'amount' => 100000,
-                'description' => 'bayar tagihan bpjs',
-                'date' => now()->toDateString(),
-                'type' => \App\Enums\Transaction\TransactionType::EXPENSE->value,
-            ],
-            [
-                'account_id' => $account->id,
-                'category_id' => $category->id,
-                'amount' => 150000,
-                'description' => 'top up game pubg',
-                'date' => now()->toDateString(),
-                'type' => \App\Enums\Transaction\TransactionType::EXPENSE->value,
-            ],
-            [
-                'account_id' => $account->id,
-                'category_id' => $category->id,
-                'amount' => 200000,
-                'description' => 'dana kaget',
-                'date' => now()->toDateString(),
-                'type' => \App\Enums\Transaction\TransactionType::INCOME->value,
-            ],
-            [
-                'account_id' => $account->id,
-                'category_id' => $category->id,
-                'amount' => 50000,
-                'description' => 'kafe',
-                'date' => now()->toDateString(),
-                'type' => \App\Enums\Transaction\TransactionType::EXPENSE->value,
-            ],
-            [
-                'account_id' => $account->id,
-                'category_id' => $category->id,
-                'amount' => 50000,
-                'description' => 'bensin',
-                'date' => now()->toDateString(),
-                'type' => \App\Enums\Transaction\TransactionType::EXPENSE->value,
-            ],
-        ];
+        $accounts = \App\Models\Account\Account::query()
+            ->where('user_id', '=', $user->id)
+            ->get();
 
-        $service = new \App\Service\TransactionService();
-        foreach ($cashflows as $cashflow) {
-            $service->create(user: $user, inputs: $cashflow);
+        $categories = \App\Models\Category\Category::query()
+            ->where('user_id', '=', $user->id)
+            ->pluck('id')->toArray();
 
+        foreach ($accounts as $account) {
+
+            $cashflows = [];
+
+            $type = \App\Enums\Transaction\TransactionType::values();
+            for ($i = 0; $i < rand(5, 10); $i++) {
+                $amount = range(10000, 300000, 25000);
+                $cashflows[] = [
+                    'account_id' => $account->id,
+                    'category_id' => $categories[rand(0, count($categories) - 1)],
+                    'amount' => $amount[rand(0, count($amount) - 1)],
+                    'description' => 'pengeluaran ' . $i,
+                    'date' => now()->toDateString(),
+                    'type' => $type[rand(0, count($type) - 1)],
+                ];
+            }
+
+            $service = new \App\Service\TransactionService();
+            foreach ($cashflows as $cashflow) {
+                $service->create(user: $user, inputs: $cashflow);
+
+            }
         }
+
     }
 };

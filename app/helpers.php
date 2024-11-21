@@ -1,5 +1,29 @@
 <?php
 
+use Illuminate\Support\Carbon;
+use Illuminate\Validation\ValidationException;
+
+
+/**
+ * @param Carbon|string $date
+ * @return Carbon
+ * @throws ValidationException
+ */
+function createDate(Carbon|string $date): Carbon
+{
+    if (is_string($date)) {
+        try {
+            $date = Carbon::createFromFormat('Y-m-d', $date);
+        } catch (Throwable $e) {
+            throw ValidationException::withMessages(['date' => __('Date format should like date_time.')]);
+        }
+    }
+    return Carbon::create(
+        year: $date->year,
+        month: $date->month,
+        day: $date->day,
+        hour: $date->hour >= 0 && $date->hour <= 11 ? 0 : 12);
+}
 
 if (!function_exists('setDefaultRequest')) {
     /**

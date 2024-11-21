@@ -6,6 +6,7 @@ use App\Actions\Transaction\CreateTransaction;
 use App\Concerns\Transactional\Mutation\InteractsWithMutation;
 use App\Contracts\Transaction\HasTransaction;
 use App\Enums\Transaction\TransactionType;
+use App\Events\NewTransaction;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
 use App\Notifications\SendNotification;
@@ -51,7 +52,9 @@ class TransactionService extends BaseService
         $this->init($user)
             ->setMutable($amount, $transaction->account, $validated['type']);
 
+        // call event new transaction created
         DB::commit();
+        event(new NewTransaction(user: $user, input: $inputs));
         // create notification
         $user->notify(
             new SendNotification(

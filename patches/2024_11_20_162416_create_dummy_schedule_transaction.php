@@ -25,6 +25,7 @@ return new class extends Patch
                 'transaction_type' => \App\Enums\Transaction\TransactionType::EXPENSE->value,
                 'schedule_type' => \App\Enums\ScheduleTransaction\ScheduleType::DAILY->value,
                 'status' => \App\Enums\ScheduleTransaction\ScheduleStatus::ACTIVE->value,
+                'action' => \App\Enums\ScheduleTransaction\ScheduleAction::TRIGGER_TRANSACTION->value,
             ],
             [
                 'account_id' => $account->id,
@@ -34,6 +35,7 @@ return new class extends Patch
                 'transaction_type' => \App\Enums\Transaction\TransactionType::EXPENSE->value,
                 'schedule_type' => \App\Enums\ScheduleTransaction\ScheduleType::DAILY->value,
                 'status' => \App\Enums\ScheduleTransaction\ScheduleStatus::PAUSED->value,
+                'action' => \App\Enums\ScheduleTransaction\ScheduleAction::TRIGGER_TRANSACTION->value,
             ],
             [
                 'account_id' => $account->id,
@@ -43,6 +45,26 @@ return new class extends Patch
                 'transaction_type' => \App\Enums\Transaction\TransactionType::EXPENSE->value,
                 'schedule_type' => \App\Enums\ScheduleTransaction\ScheduleType::DAILY->value,
                 'status' => \App\Enums\ScheduleTransaction\ScheduleStatus::COMPLETED->value,
+                'action' => \App\Enums\ScheduleTransaction\ScheduleAction::CREATE_NOTIFICATION->value,
+            ], [
+                'account_id' => $account->id,
+                'category_id' => $category->id,
+                'transaction_amount' => 100000,
+                'transaction_description' => 'schedule transaction',
+                'transaction_type' => \App\Enums\Transaction\TransactionType::EXPENSE->value,
+                'schedule_type' => \App\Enums\ScheduleTransaction\ScheduleType::DAILY->value,
+                'status' => \App\Enums\ScheduleTransaction\ScheduleStatus::ACTIVE->value,
+                'action' => \App\Enums\ScheduleTransaction\ScheduleAction::TRIGGER_TRANSACTION->value,
+            ],
+            [
+                'account_id' => $account->id,
+                'category_id' => $category->id,
+                'transaction_amount' => 100000,
+                'transaction_description' => 'schedule transaction test create notification',
+                'transaction_type' => \App\Enums\Transaction\TransactionType::EXPENSE->value,
+                'schedule_type' => \App\Enums\ScheduleTransaction\ScheduleType::DAILY->value,
+                'status' => \App\Enums\ScheduleTransaction\ScheduleStatus::ACTIVE->value,
+                'action' => \App\Enums\ScheduleTransaction\ScheduleAction::CREATE_NOTIFICATION->value,
             ]
         ];
 

@@ -18,14 +18,25 @@ class SeedAccount extends Seeder
     public function run(): void
     {
         $user = User::query()->firstOrFail();
-        $account = [
-            'id' => Str::uuid(),
-            'user_id' => $user->id,
-            'name' => 'tabungan',
-            'type' => AccountType::CASH->value,
-            'currency' => Currency::IDR->value,
+        $accounts = [
+            [
+                'id' => Str::uuid(),
+                'user_id' => $user->id,
+                'name' => 'Dana Darurat',
+                'type' => AccountType::SAVING->value,
+                'currency' => Currency::IDR->value,
+            ], [
+                'id' => Str::uuid(),
+                'user_id' => $user->id,
+                'name' => 'Akun Utama',
+                'type' => AccountType::CASH->value,
+                'currency' => Currency::IDR->value,
+            ]
         ];
 
-        Account::query()->create($account);
+        foreach ($accounts as $account) {
+            Account::query()->create($account);
+        }
+
     }
 }

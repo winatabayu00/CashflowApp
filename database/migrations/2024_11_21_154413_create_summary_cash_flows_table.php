@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('budgets', function (Blueprint $table) {
+        Schema::create('summary_cash_flows', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignIdFor(\App\Models\User::class, 'user_id')
                 ->constrained()
-                ->onDelete('cascade');
-            $table->nullableUuidMorphs('budgetable');
-            $table->decimal('amount', 15);
-            $table->string('description')->nullable();
-            $table->string('status')->default(\App\Enums\Budget\BudgetStatus::ACTIVE->value);
+                ->onDelete('restrict');
+            $table->date('group_date');
+            $table->decimal('amount_income', 15)->default(0);
+            $table->decimal('amount_expense', 15)->default(0);
+            $table->decimal('amount_total', 15)->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('budgets');
+        Schema::dropIfExists('summary_cash_flows');
     }
 };
