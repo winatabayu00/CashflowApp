@@ -61,13 +61,16 @@ return [
 
     'web' => [
         /** @inject web **/
-        App\Http\Routes\DefaultRoute::class
+        App\Http\Routes\DefaultRoute::class,
+        App\Http\Controllers\App\Authentication\LoginController::class,
+        App\Http\Controllers\App\Authentication\RegisterController::class,
     ],
     'api' => [
         /** @inject api **/
     ],
     'app' => [
         /** @inject app **/
+        App\Http\Controllers\App\Dashboard\DashboardController::class,
         App\Http\Controllers\App\Account\AccountController::class,
     ],
     'api-options' => [

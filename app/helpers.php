@@ -25,6 +25,17 @@ function createDate(Carbon|string $date): Carbon
         hour: $date->hour >= 0 && $date->hour <= 11 ? 0 : 12);
 }
 
+/**
+ * @return \Illuminate\Contracts\Auth\Authenticatable|\Illuminate\Http\RedirectResponse
+ */
+function activeUser()
+{
+   if (!auth()->check()) {
+       return redirect()->route('auth.login');
+   }
+    return auth()->user();
+}
+
 if (!function_exists('setDefaultRequest')) {
     /**
      * Set Default Value for Request Input.

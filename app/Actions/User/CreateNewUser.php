@@ -5,7 +5,7 @@ namespace App\Actions\User;
 use App\Concerns\Base\ValidationInput;
 use App\Enums\ResponseCode\ResponseCode;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Winata\Core\Response\Exception\BaseException;
 use Winata\PackageBased\Abstracts\BaseAction;
@@ -28,7 +28,7 @@ class CreateNewUser extends BaseAction
             inputs: $this->inputs,
             rules: [
                 'name' => ['required', 'string', 'max:255'],
-                'username' => ['required', 'string', 'max:100'],
+                'username' => ['nullable', 'string', 'max:100'],
                 'password' => ['nullable', 'string'],
                 'email' => [
                     'nullable',
@@ -54,12 +54,11 @@ class CreateNewUser extends BaseAction
 
     #[\Override] public function handle(): mixed
     {
-
         // Create User
         $input = User::getFillableAttribute($this->validatedData);
-
+        $input['username'] = !empty($input['username']) ? $input['username'] : Str::random(12);
         $user = new User();
-        $user->password = (new User())->getDefaultPassword();
+        $user->password = !empty($input['password']) ? $input['password'] : (new User())->getDefaultPassword();
         if (!empty($this->validatedData['phone'])){
             $phone = sanitizePhone(phone: $this->validatedData['phone'], dial: $this->validatedData['dial']);
             $user->phone = $phone;
