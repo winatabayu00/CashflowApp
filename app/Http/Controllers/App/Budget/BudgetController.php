@@ -4,34 +4,56 @@ namespace App\Http\Controllers\App\Budget;
 
 use App\Actions\Budget\CreateBudget;
 use App\Actions\Budget\UpdateBudget;
+use App\Http\Controllers\Api\SelectOption\GlobalSelectOptionController;
 use App\Http\Controllers\Controller;
 use App\Models\Budget\Budget;
 use App\Models\User;
+use App\Queries\Budget\BudgetQuery;
 use Dentro\Yalr\Attributes;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 #[Attributes\Prefix('budget')]
-#[Attributes\Name('budget', true, false)]
+#[Attributes\Name('budget', true, true)]
 class BudgetController extends Controller
 {
-    /**
-     * @return View
-     */
-    #[Attributes\Get(uri: '')]
-    public function index(): \Illuminate\Contracts\View\View
+    public function __construct()
     {
-        return $this->view('budget.index');
+        parent::__construct();
+        $this->setPageTitle('Budget');
     }
 
     /**
      * @return View
+     * @throws \Exception
      */
-    #[Attributes\Get(uri: 'create')]
+    #[Attributes\Get(uri: '', name: 'index')]
+    public function index(): \Illuminate\Contracts\View\View
+    {
+        $user = auth()->user();
+        $budgets = BudgetQuery::byUser($user->id)
+            ->with(['budgetable'])
+            ->filterColumn()
+            ->orderColumn()
+            ->getAllDataPaginated();
+
+        $this->setData('budgets', $budgets);
+        return $this->view('pages.budget.index');
+    }
+
+    /**
+     * @return View
+     * @throws \Exception
+     */
+    #[Attributes\Get(uri: 'create', name: 'create')]
     public function create(): \Illuminate\Contracts\View\View
     {
-        return $this->view('budget.index');
+        $controller = new GlobalSelectOptionController();
+        $budgetStatus = $controller->budgetStatus();
+
+        $this->setData('budgetStatus', $budgetStatus);
+        return $this->view('pages.budget.create');
     }
 
     /**
@@ -46,7 +68,7 @@ class BudgetController extends Controller
         $user = auth()->user();
         (new CreateBudget(user: $user, inputs: $request->input()))
             ->handle();
-
+        sendIndicator('SUCCESS', '', true)->duration(5000);
         return back();
     }
 
@@ -64,10 +86,15 @@ class BudgetController extends Controller
      * @param Budget $budget
      * @return View
      */
-    #[Attributes\Get(uri: '{budget}/edit')]
+    #[Attributes\Get(uri: '{budget}/edit', name: 'edit')]
     public function edit(Budget $budget): \Illuminate\Contracts\View\View
     {
-        return $this->view('budget.index');
+        $controller = new GlobalSelectOptionController();
+        $budgetStatus = $controller->budgetStatus();
+
+        $this->setData('budgetStatus', $budgetStatus);
+        setDefaultRequest($budget->toArray());
+        return $this->view('pages.budget.edit');
     }
 
     /**
@@ -80,6 +107,23 @@ class BudgetController extends Controller
     {
         (new UpdateBudget(budget: $budget, inputs: $request->input()))
             ->handle();
+        sendIndicator('SUCCESS', '', true)->duration(5000);
+
+        return back();
+    }
+
+    /**
+     * @param Request $request
+     * @param Budget $budget
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    #[Attributes\Delete(uri: '{budget}/destroy', name: 'destroy')]
+    public function destroy(Request $request, Budget $budget): \Illuminate\Http\RedirectResponse
+    {
+        $budget->delete();
+        sendIndicator('SUCCESS', '', true)->duration(5000);
+
         return back();
     }
 }

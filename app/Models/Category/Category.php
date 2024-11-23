@@ -2,7 +2,9 @@
 
 namespace App\Models\Category;
 
+use App\Concerns\Budget\InteractsWithBudgetable;
 use App\Concerns\User\InteractsWithUser;
+use App\Contracts\Budget\HasBudgetable;
 use App\Contracts\User\HasUser;
 use App\Models\Model;
 use App\Models\Transaction\Transaction;
@@ -17,10 +19,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $type
  * @property Collection<Transaction> $transaction
  * */
-class Category extends Model implements HasUser
+class Category extends Model implements HasUser, HasBudgetable
 {
     use HasUuids;
     use InteractsWithUser;
+    use InteractsWithBudgetable;
 
     protected $table = 'categories';
 

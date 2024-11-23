@@ -29,6 +29,7 @@ class TransactionController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return View
      * @throws \Exception
      */

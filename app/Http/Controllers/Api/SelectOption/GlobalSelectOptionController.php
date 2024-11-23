@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\SelectOption;
 
-use App\Enums\Account\AccountType;
 use App\Enums\Budget\BudgetStatus;
 use App\Enums\Category\CategoryType;
 use App\Enums\ScheduleTransaction\ScheduleAction;
@@ -21,25 +20,6 @@ use Winata\Core\Response\Http\Response;
 #[Attributes\Name('', true, false)]
 class GlobalSelectOptionController extends Controller
 {
-    /**
-     * @param
-     * @return Response
-     */
-    #[Attributes\Get(uri: 'account-types')]
-    public function accountTypes(): \Winata\Core\Response\Http\Response
-    {
-        $accountTypes = AccountType::options();
-
-        $data = collect($accountTypes)
-            ->map(function ($key, $value) {
-                return [
-                    'id' => $key,
-                    'name' => $value,
-                ];
-            });
-        return $this->response($data);
-    }
-
     /**
      * @param
      * @return Response

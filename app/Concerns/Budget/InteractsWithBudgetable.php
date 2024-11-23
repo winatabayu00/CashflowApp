@@ -5,7 +5,7 @@ namespace App\Concerns\Budget;
 use App\Models\Budget\Budget;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class InteractsWithBudgetable
+trait InteractsWithBudgetable
 {
     /**
      * @return MorphMany
@@ -29,5 +29,13 @@ class InteractsWithBudgetable
     public function getBudgetableName(): string
     {
         return property_exists($this, 'MORPH_ALIAS') ? $this->MORPH_ALIAS : $this->getMorphClass();
+    }
+
+    /**
+     * @return string
+     */
+    public function getBudgetableItemName(): string
+    {
+        return $this->name;
     }
 }

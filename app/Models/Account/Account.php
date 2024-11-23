@@ -2,8 +2,10 @@
 
 namespace App\Models\Account;
 
+use App\Concerns\Budget\InteractsWithBudgetable;
 use App\Concerns\Transactional\Mutation\Mutable;
 use App\Concerns\User\InteractsWithUser;
+use App\Contracts\Budget\HasBudgetable;
 use App\Contracts\Transactional\Mutation\HasMutable;
 use App\Contracts\User\HasUser;
 use App\Models\Model;
@@ -20,11 +22,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $currency
  * @property Collection<Transaction> $transaction
  * */
-class Account extends Model implements HasUser, HasMutable
+class Account extends Model implements HasUser, HasMutable, HasBudgetable
 {
     use HasUuids;
     use InteractsWithUser;
     use Mutable;
+    use InteractsWithBudgetable;
 
     protected $table = 'accounts';
 

@@ -75,6 +75,7 @@ return [
         App\Http\Controllers\App\Transaction\TransactionController::class,
         App\Http\Controllers\App\ScheduleTransaction\ScheduleTransactionController::class,
         App\Http\Controllers\App\Report\ReportController::class,
+        App\Http\Controllers\App\Budget\BudgetController::class,
     ],
     'api-options' => [
         App\Http\Controllers\Api\SelectOption\GlobalSelectOptionController::class,
