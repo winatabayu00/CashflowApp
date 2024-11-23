@@ -50,7 +50,7 @@ class TransactionService extends BaseService
         // update balance on account
         $amount = $validated['type'] == TransactionType::EXPENSE->value ? $validated['amount'] * -1 : $validated['amount'];
         $this->init($user)
-            ->setMutable($amount, $transaction->account, $validated['type']);
+            ->setMutable($amount, $transaction->account, $validated['type'], $validated['date']);
 
         // call event new transaction created
         DB::commit();

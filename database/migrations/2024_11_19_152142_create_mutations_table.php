@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('amount', 15);
             $table->decimal('amount_before', 15);
             $table->decimal('amount_after', 15);
+            $table->date('date');
             $table->timestamps();
         });
     }

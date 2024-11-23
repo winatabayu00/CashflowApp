@@ -35,6 +35,7 @@ trait InteractsWithMutation
         float      $amount,
         HasMutable $mutable,
         string     $mutationInfo,
+        string     $date,
         bool       $isLocking = true
     ): static
     {
@@ -43,6 +44,7 @@ trait InteractsWithMutation
             mutable: $mutable,
             mutationInfo: $mutationInfo,
             amount: $amount,
+            date: $date,
             isLocking: $isLocking
         );
 
@@ -63,6 +65,7 @@ trait InteractsWithMutation
         HasMutable $mutable,
         string     $mutationInfo,
         float      $amount,
+        string     $date,
         bool       $isLocking = true
     ): Mutation
     {
@@ -71,6 +74,7 @@ trait InteractsWithMutation
             mutable: $mutable,
             amount: $amount,
             mutationInfo: $mutationInfo,
+            date: $date,
             isLocking: $isLocking,
         ))
             ->handle();

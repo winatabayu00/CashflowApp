@@ -4,8 +4,10 @@ namespace App\Models\Summary;
 
 use App\Concerns\User\InteractsWithUser;
 use App\Contracts\User\HasUser;
+use App\Models\Account\Account;
 use App\Models\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SummaryAccountCashFlow extends Model implements HasUser
 {
@@ -28,4 +30,9 @@ class SummaryAccountCashFlow extends Model implements HasUser
         'amount_expense' => 'float',
         'amount_total' => 'float',
     ];
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(Account::class, 'account_id');
+    }
 }

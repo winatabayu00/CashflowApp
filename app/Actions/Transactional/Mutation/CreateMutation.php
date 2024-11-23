@@ -18,12 +18,13 @@ class CreateMutation extends BaseAction
     use ValidationInput;
 
     public function __construct(
-        public readonly User      $user,
-        public readonly HasMutable   $mutable,
-        public readonly float        $amount,
-        public readonly string $mutationInfo,
-        public readonly bool         $isLocking = false,
-        public bool                  $usingDBTransaction = false
+        public readonly User       $user,
+        public readonly HasMutable $mutable,
+        public readonly float      $amount,
+        public readonly string     $mutationInfo,
+        public readonly string     $date,
+        public readonly bool       $isLocking = false,
+        public bool                $usingDBTransaction = false
     )
     {
         parent::__construct();
@@ -66,6 +67,7 @@ class CreateMutation extends BaseAction
         $mutation->amount = $this->amount;
         $mutation->amount_before = $startingAmount;
         $mutation->user_id = $this->user->id;
+        $mutation->date = $this->date;
 
         // update balance
         $mutation->amount_after = $startingAmount + $this->amount;

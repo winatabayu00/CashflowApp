@@ -33,12 +33,13 @@ class TransactionController extends Controller
      * @throws \Exception
      */
     #[Attributes\Get(uri: '', name: 'index')]
-    public function index(): \Illuminate\Contracts\View\View
+    public function index(Request $request): \Illuminate\Contracts\View\View
     {
-        \request()->mergeIfMissing([
+        $request->mergeIfMissing([
             'date_from' => now()->startOfMonth()->toDateString(),
             'date_to' => now()->toDateString(),
         ]);
+
         /** @var User $user */
         $user = auth()->user();
         $transactions = TransactionQuery::byUser($user->id)
