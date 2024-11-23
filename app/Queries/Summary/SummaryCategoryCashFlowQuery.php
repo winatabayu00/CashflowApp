@@ -19,7 +19,12 @@ class SummaryCategoryCashFlowQuery extends BaseQueryBuilder
 
     public function applyFilterParams(): void
     {
+        $request = request();
         $this->filterDateRange('group_date');
 
+        $this->builder
+            ->when(!empty($request->input('category_id')), static function (Builder $builder) use ($request) {
+                $builder->where('category_id', '=', $request->input('category_id'));
+            });
     }
 }

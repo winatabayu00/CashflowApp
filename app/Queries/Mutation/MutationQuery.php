@@ -19,7 +19,13 @@ class MutationQuery extends BaseQueryBuilder
 
     public function applyFilterParams(): void
     {
+        $request = request();
         $this->filterDateRange('date');
+
+        $this->builder
+            ->when(!empty($request->input('type')), static function (Builder $builder) use ($request) {
+                $builder->where('type', '=', $request->input('type'));
+            });
 
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App\Report;
 
+use App\Http\Controllers\Api\SelectOption\GlobalSelectOptionController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Queries\Mutation\MutationQuery;
@@ -37,6 +38,10 @@ class ReportController extends Controller
             ->orderColumn()
             ->getAllDataPaginated();
 
+        $selectOption = new GlobalSelectOptionController();
+        $mutationTypes = $selectOption->mutationTypes();
+
+        $this->setData('mutationTypes', $mutationTypes);
         $this->setData('mutations', $mutations);
         return $this->view('pages.report.mutation');
     }
@@ -74,6 +79,11 @@ class ReportController extends Controller
             ->orderColumn()
             ->getAllDataPaginated();
 
+        $selectOption = new GlobalSelectOptionController();
+        $accounts = $selectOption->accounts();
+
+        $this->setData('accounts', $accounts);
+
         $this->setData('summaries', $summaries);
         return $this->view('pages.report.account-summary');
     }
@@ -92,6 +102,11 @@ class ReportController extends Controller
             ->filterColumn()
             ->orderColumn()
             ->getAllDataPaginated();
+
+        $selectOption = new GlobalSelectOptionController();
+        $categories = $selectOption->categories();
+
+        $this->setData('categories', $categories);
 
         $this->setData('summaries', $summaries);
         return $this->view('pages.report.category-summary');

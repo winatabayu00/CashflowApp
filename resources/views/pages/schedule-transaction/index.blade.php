@@ -12,7 +12,7 @@
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                             class="path2"></span></i> <input type="text" data-kt-customer-table-filter="search"
-                                                             class="form-control form-control-solid w-250px ps-12" placeholder="Search Customers" />
+                                                             class="form-control form-control-solid w-250px ps-12" placeholder="Search" />
                 </div>
                 <!--end::Search-->
             </div>
@@ -43,91 +43,79 @@
 
                         <!--begin::Content-->
                         <div class="px-7 py-5">
-                            <!--begin::Input group-->
-                            <div class="mb-10">
-                                <!--begin::Label-->
-                                <label class="form-label fs-5 fw-semibold mb-3">Month:</label>
-                                <!--end::Label-->
+                            <form>
+                                <div class="fv-row mb-8">
+                                    <!--begin::Email-->
+                                    <label class="required" for="date_to">Account</label>
+                                    <select class="form-select" data-control="select2" name="account_id" data-placeholder="Select an option" data-allow-clear="true">
+                                        <option></option>
+                                        @foreach($accounts->data as $account)
+                                            <option value="{{ $account['id'] }}" @selected(request()->input('account_id') == $account['id'])>{{ $account['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('account_id')
+                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">{{ $message }}</div>
+                                    @enderror
 
-                                <!--begin::Input-->
-                                <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
-                                        data-placeholder="Select option" data-allow-clear="true"
-                                        data-kt-customer-table-filter="month" data-dropdown-parent="#kt-toolbar-filter">
-                                    <option></option>
-                                    <option value="aug">August</option>
-                                    <option value="sep">September</option>
-                                    <option value="oct">October</option>
-                                    <option value="nov">November</option>
-                                    <option value="dec">December</option>
-                                </select>
-                                <!--end::Input-->
-                            </div>
-                            <!--end::Input group-->
-
-                            <!--begin::Input group-->
-                            <div class="mb-10">
-                                <!--begin::Label-->
-                                <label class="form-label fs-5 fw-semibold mb-3">Payment
-                                    Type:</label>
-                                <!--end::Label-->
-
-                                <!--begin::Options-->
-                                <div class="d-flex flex-column flex-wrap fw-semibold"
-                                     data-kt-customer-table-filter="payment_type">
-                                    <!--begin::Option-->
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input" type="radio" name="payment_type" value="all"
-                                               checked="checked" />
-                                        <span class="form-check-label text-gray-600">
-                                        All
-                                    </span>
-                                    </label>
-                                    <!--end::Option-->
-
-                                    <!--begin::Option-->
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input" type="radio" name="payment_type" value="visa" />
-                                        <span class="form-check-label text-gray-600">
-                                        Visa
-                                    </span>
-                                    </label>
-                                    <!--end::Option-->
-
-                                    <!--begin::Option-->
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
-                                        <input class="form-check-input" type="radio" name="payment_type"
-                                               value="mastercard" />
-                                        <span class="form-check-label text-gray-600">
-                                        Mastercard
-                                    </span>
-                                    </label>
-                                    <!--end::Option-->
-
-                                    <!--begin::Option-->
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="radio" name="payment_type"
-                                               value="american_express" />
-                                        <span class="form-check-label text-gray-600">
-                                        American Express
-                                    </span>
-                                    </label>
-                                    <!--end::Option-->
                                 </div>
-                                <!--end::Options-->
-                            </div>
-                            <!--end::Input group-->
 
-                            <!--begin::Actions-->
-                            <div class="d-flex justify-content-end">
-                                <button type="reset" class="btn btn-light btn-active-light-primary me-2"
-                                        data-kt-menu-dismiss="true" data-kt-customer-table-filter="reset">Reset
-                                </button>
+                                <div class="fv-row mb-8">
+                                    <!--begin::Email-->
+                                    <label class="required" for="date_to">Category</label>
+                                    <select class="form-select" data-control="select2" name="category_id" data-placeholder="Select an option" data-allow-clear="true">
+                                        <option></option>
+                                        @foreach($categories->data as $category)
+                                            <option value="{{ $category['id'] }}" @selected(request()->input('category_id') == $category['id'])>{{ $category['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('category_id')
+                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">{{ $message }}</div>
+                                    @enderror
 
-                                <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true"
-                                        data-kt-customer-table-filter="filter">Apply
-                                </button>
-                            </div>
-                            <!--end::Actions-->
+                                </div>
+
+                                <div class="fv-row mb-8">
+                                    <!--begin::Email-->
+                                    <label class="required" for="date_to">Transaction Type</label>
+                                    <select class="form-select" data-control="select2" name="schedule_type" data-placeholder="Select an option">
+                                        <option></option>
+                                        @foreach($scheduleTypes->data as $scheduleType)
+                                            <option value="{{ $scheduleType['id'] }}" @selected(old('schedule_type') == $scheduleType['id']) @disabled($scheduleType['id'] != \App\Enums\ScheduleTransaction\ScheduleType::DAILY->value)>{{ $scheduleType['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('schedule_type')
+                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+
+                                <div class="fv-row mb-8">
+                                    <!--begin::Email-->
+                                    <label class="required" for="date_to">Transaction Type</label>
+                                    <select class="form-select" data-control="select2" name="transaction_type" data-placeholder="Select an option" data-allow-clear="true">
+                                        <option></option>
+                                        @foreach($transactionTypes->data as $type)
+                                            <option value="{{ $type['id'] }}" @selected(request()->input('type') == $type['id'])>{{ $type['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('transaction_type')
+                                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+
+                                <!--begin::Actions-->
+                                <div class="d-flex justify-content-end">
+                                    <button type="reset" class="btn btn-light btn-active-light-primary me-2"
+                                            data-kt-menu-dismiss="true" data-kt-customer-table-filter="reset">Reset
+                                    </button>
+
+                                    <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true"
+                                            data-kt-customer-table-filter="filter">Apply
+                                    </button>
+                                </div>
+                                <!--end::Actions-->
+                            </form>
                         </div>
                         <!--end::Content-->
                     </div>
@@ -182,6 +170,7 @@
                     <th class="min-w-125px">Created Date</th>
                     <th class="min-w-125px">Description</th>
                     <th class="min-w-125px">Last Execute</th>
+                    <th class="min-w-125px">Schedule Type</th>
                     <th class="min-w-125px">Repeat</th>
                     <th class="min-w-125px">Status</th>
                 </tr>
@@ -253,6 +242,10 @@
                         <td>
                             {{ $model->last_executed }}
                         </td>
+                        <td>
+                            {{ $model->schedule_type }}
+                        </td>
+
                         <td>
                             {{ $model->repeat }}
                         </td>

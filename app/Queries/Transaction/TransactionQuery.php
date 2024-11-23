@@ -37,6 +37,8 @@ class TransactionQuery extends BaseQueryBuilder
             })
             ->when(!empty($request->input('category_id')), static function (Builder $builder) use ($request) {
                 $builder->where('category_id', '=', $request->input('category_id'));
+            })->when(!empty($request->input('type')), static function (Builder $builder) use ($request) {
+                $builder->where('type', '=', $request->input('type'));
             });
     }
 }

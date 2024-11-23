@@ -40,6 +40,18 @@ class ScheduleTransactionController extends Controller
             ->orderColumn()
             ->getAllDataPaginated();
 
+        $selectOption = new GlobalSelectOptionController();
+        $accounts = $selectOption->accounts();
+        $categories = $selectOption->categories();
+        $transactionTypes = $selectOption->transactionTypes();
+        $scheduleTypes = $selectOption->scheduleTypes();
+        $scheduleActions = $selectOption->scheduleActions();
+
+        $this->setData('accounts', $accounts);
+        $this->setData('categories', $categories);
+        $this->setData('transactionTypes', $transactionTypes);
+        $this->setData('scheduleTypes', $scheduleTypes);
+        $this->setData('scheduleActions', $scheduleActions);
         $this->setData('scheduleTransactions', $scheduleTransactions);
         return $this->view('pages.schedule-transaction.index');
     }

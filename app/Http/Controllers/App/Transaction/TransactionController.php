@@ -64,6 +64,15 @@ class TransactionController extends Controller
             'total_account' => AccountQuery::byUser($user->id)->build()->count(),
         ];
 
+        $selectOption = new GlobalSelectOptionController();
+        $accounts = $selectOption->accounts();
+        $categories = $selectOption->categories();
+        $transactionTypes = $selectOption->transactionTypes();
+
+        $this->setData('accounts', $accounts);
+        $this->setData('categories', $categories);
+        $this->setData('transactionTypes', $transactionTypes);
+
         $this->setData('summaries', $summaries);
         $this->setData('transactions', $transactions);
         return $this->view('pages.transaction.index');

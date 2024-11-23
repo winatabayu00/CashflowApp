@@ -8,6 +8,7 @@ use App\Enums\ScheduleTransaction\ScheduleAction;
 use App\Enums\ScheduleTransaction\ScheduleStatus;
 use App\Enums\ScheduleTransaction\ScheduleType;
 use App\Enums\Transaction\TransactionType;
+use App\Enums\Transactional\Mutation\MutationType;
 use App\Http\Controllers\Api\Controller;
 use App\Models\Account\Account;
 use App\Models\Category\Category;
@@ -28,6 +29,25 @@ class GlobalSelectOptionController extends Controller
     public function categoryTypes(): \Winata\Core\Response\Http\Response
     {
         $categoryTypes = CategoryType::options();
+
+        $data = collect($categoryTypes)
+            ->map(function ($key, $value) {
+                return [
+                    'id' => $key,
+                    'name' => $value,
+                ];
+            });
+        return $this->response($data);
+    }
+
+    /**
+     * @param
+     * @return Response
+     */
+    #[Attributes\Get(uri: 'mutation-types')]
+    public function mutationTypes(): \Winata\Core\Response\Http\Response
+    {
+        $categoryTypes = MutationType::options();
 
         $data = collect($categoryTypes)
             ->map(function ($key, $value) {
