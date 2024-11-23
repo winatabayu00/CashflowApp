@@ -8,11 +8,15 @@ use App\Http\Controllers\Api\SelectOption\GlobalSelectOptionController;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
+use App\Queries\Account\AccountQuery;
+use App\Queries\Summary\SummaryCashFlowQuery;
 use App\Queries\Transaction\TransactionQuery;
 use Dentro\Yalr\Attributes;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 #[Attributes\Prefix('transaction')]
 #[Attributes\Name('transaction', true, true)]
@@ -31,6 +35,10 @@ class TransactionController extends Controller
     #[Attributes\Get(uri: '', name: 'index')]
     public function index(): \Illuminate\Contracts\View\View
     {
+        \request()->mergeIfMissing([
+            'date_from' => now()->startOfMonth()->toDateString(),
+            'date_to' => now()->toDateString(),
+        ]);
         /** @var User $user */
         $user = auth()->user();
         $transactions = TransactionQuery::byUser($user->id)
@@ -38,6 +46,23 @@ class TransactionController extends Controller
             ->filterColumn()
             ->orderColumn()
             ->getAllDataPaginated();
+
+        $summaryCashFLow = SummaryCashFlowQuery::byUser($user->id)
+            ->filterColumn()
+            ->orderColumn()
+            ->build()
+            ->get();
+
+        $overallIncome = $summaryCashFLow->sum('amount_income');
+        $overallExpense = $summaryCashFLow->sum('amount_expense');
+        $summaries = [
+            'amount_income' => $overallIncome,
+            'amount_expense' => $overallExpense,
+            'amount_total' => $overallIncome + $overallExpense,
+            'total_account' => AccountQuery::byUser($user->id)->build()->count(),
+        ];
+
+        $this->setData('summaries', $summaries);
         $this->setData('transactions', $transactions);
         return $this->view('pages.transaction.index');
     }

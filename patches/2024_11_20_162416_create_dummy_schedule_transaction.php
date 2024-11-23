@@ -4,7 +4,7 @@ use Dentro\Patcher\Patch;
 
 return new class extends Patch
 {
-    public bool $isPerpetual = true;
+    public bool $isPerpetual = false;
 
     /**
      * Run patch script.

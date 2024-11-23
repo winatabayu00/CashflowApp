@@ -43,6 +43,9 @@ class JobCreateCategorySummary implements ShouldQueue
                 'category_id' => $this->category->id,
                 'group_date' => $groupDate,
             ], [
+                'user_id' => $this->user->id,
+                'category_id' => $this->category->id,
+                'group_date' => $groupDate,
                 'amount_income' => 0,
                 'amount_expense' => 0,
                 'amount_total' => 0,

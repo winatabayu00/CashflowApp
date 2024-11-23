@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Domains\Merchant\Models\Summaries\TenantSaleSummary;
 use App\Enums\Transaction\TransactionType;
 use App\Models\Summary\SummaryCashFlow;
 use App\Models\User;
@@ -41,6 +40,8 @@ class JobCreateSummary implements ShouldQueue
                 'user_id' => $this->user->id,
                 'group_date' => $groupDate,
             ], [
+                'user_id' => $this->user->id,
+                'group_date' => $groupDate,
                 'amount_income' => 0,
                 'amount_expense' => 0,
                 'amount_total' => 0,

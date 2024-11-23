@@ -43,6 +43,9 @@ class JobCreateAccountSummary implements ShouldQueue
                 'account_id' => $this->account->id,
                 'group_date' => $groupDate,
             ], [
+                'user_id' => $this->user->id,
+                'account_id' => $this->account->id,
+                'group_date' => $groupDate,
                 'amount_income' => 0,
                 'amount_expense' => 0,
                 'amount_total' => 0,
