@@ -16,5 +16,9 @@ class DefaultRoute extends BaseRoute
         $this->router->get('/', function () {
             return view('welcome');
         });
+
+        $this->router->get('/login', function () {
+            return redirect()->route('auth.login');
+        })->name('login');
     }
 }

@@ -14,7 +14,6 @@ use App\Models\Category\Category;
 use App\Queries\Account\AccountQuery;
 use App\Queries\Category\CategoryQuery;
 use Dentro\Yalr\Attributes;
-use Illuminate\Http\Request;
 use Winata\Core\Response\Http\Response;
 
 #[Attributes\Prefix('')]
@@ -31,7 +30,7 @@ class GlobalSelectOptionController extends Controller
         $accountTypes = AccountType::options();
 
         $data = collect($accountTypes)
-            ->map(function ($value, $key) {
+            ->map(function ($key, $value) {
                 return [
                     'id' => $key,
                     'name' => $value,
@@ -50,7 +49,7 @@ class GlobalSelectOptionController extends Controller
         $categoryTypes = CategoryType::options();
 
         $data = collect($categoryTypes)
-            ->map(function ($value, $key) {
+            ->map(function ($key, $value) {
                 return [
                     'id' => $key,
                     'name' => $value,
@@ -69,7 +68,7 @@ class GlobalSelectOptionController extends Controller
         $transactionTypes = TransactionType::options();
 
         $data = collect($transactionTypes)
-            ->map(function ($value, $key) {
+            ->map(function ($key, $value) {
                 return [
                     'id' => $key,
                     'name' => $value,
@@ -88,7 +87,7 @@ class GlobalSelectOptionController extends Controller
         $scheduleTypes = ScheduleType::options();
 
         $data = collect($scheduleTypes)
-            ->map(function ($value, $key) {
+            ->map(function ($key, $value) {
                 return [
                     'id' => $key,
                     'name' => $value,
@@ -107,7 +106,7 @@ class GlobalSelectOptionController extends Controller
         $scheduleStatus = ScheduleStatus::options();
 
         $data = collect($scheduleStatus)
-            ->map(function ($value, $key) {
+            ->map(function ($key, $value) {
                 return [
                     'id' => $key,
                     'name' => $value,
@@ -126,7 +125,7 @@ class GlobalSelectOptionController extends Controller
         $budgetStatus = BudgetStatus::options();
 
         $data = collect($budgetStatus)
-            ->map(function ($value, $key) {
+            ->map(function ($key, $value) {
                 return [
                     'id' => $key,
                     'name' => $value,

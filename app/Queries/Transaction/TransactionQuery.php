@@ -17,7 +17,8 @@ class TransactionQuery extends BaseQueryBuilder
      */
     public function getBaseQuery(): Builder
     {
-        return Transaction::query();
+        return Transaction::query()
+            ->orderBy('created_at', 'desc');
     }
 
     /**

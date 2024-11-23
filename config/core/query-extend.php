@@ -12,7 +12,7 @@ return [
     */
     "perpage" =>[
         "key" => "perpage",
-        "value" => 30,
+        "value" => 20,
     ],
 
     /*

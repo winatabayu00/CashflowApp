@@ -17,3 +17,8 @@
 <script src="{{ asset('js/custom/widgets.js') }}"></script>
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
+
+<script>
+
+    $(".date-flatpickr").flatpickr();
+</script>

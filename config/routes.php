@@ -72,6 +72,7 @@ return [
         /** @inject app **/
         App\Http\Controllers\App\Dashboard\DashboardController::class,
         App\Http\Controllers\App\Account\AccountController::class,
+        App\Http\Controllers\App\Transaction\TransactionController::class,
     ],
     'api-options' => [
         App\Http\Controllers\Api\SelectOption\GlobalSelectOptionController::class,

@@ -33,6 +33,8 @@ class UpdateTransaction extends BaseAction
         $this->validate(
             inputs: $this->inputs,
             rules: [
+                'account_id' => ['required', 'uuid'],
+                'category_id' => ['required', 'uuid'],
                 'amount' => ['required', 'numeric', 'gt:0'],
                 'description' => ['required', 'string'],
                 'date' => ['required', 'date'],

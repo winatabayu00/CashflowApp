@@ -122,7 +122,7 @@
                 <!--end::Container-->
 
                 <!--begin::Footer-->
-                @include('layouts.block.footer')
+{{--                @include('layouts.block.footer')--}}
                 <!--end::Footer-->
             </div>
             <!--end::Wrapper-->
