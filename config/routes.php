@@ -73,6 +73,7 @@ return [
         App\Http\Controllers\App\Dashboard\DashboardController::class,
         App\Http\Controllers\App\Account\AccountController::class,
         App\Http\Controllers\App\Transaction\TransactionController::class,
+        App\Http\Controllers\App\ScheduleTransaction\ScheduleTransactionController::class,
     ],
     'api-options' => [
         App\Http\Controllers\Api\SelectOption\GlobalSelectOptionController::class,

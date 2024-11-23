@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\SelectOption;
 use App\Enums\Account\AccountType;
 use App\Enums\Budget\BudgetStatus;
 use App\Enums\Category\CategoryType;
+use App\Enums\ScheduleTransaction\ScheduleAction;
 use App\Enums\ScheduleTransaction\ScheduleStatus;
 use App\Enums\ScheduleTransaction\ScheduleType;
 use App\Enums\Transaction\TransactionType;
@@ -85,6 +86,25 @@ class GlobalSelectOptionController extends Controller
     public function scheduleTypes(): \Winata\Core\Response\Http\Response
     {
         $scheduleTypes = ScheduleType::options();
+
+        $data = collect($scheduleTypes)
+            ->map(function ($key, $value) {
+                return [
+                    'id' => $key,
+                    'name' => $value,
+                ];
+            });
+        return $this->response($data);
+    }
+
+    /**
+     * @param
+     * @return Response
+     */
+    #[Attributes\Get(uri: 'schedule-actions')]
+    public function scheduleActions(): \Winata\Core\Response\Http\Response
+    {
+        $scheduleTypes = ScheduleAction::options();
 
         $data = collect($scheduleTypes)
             ->map(function ($key, $value) {

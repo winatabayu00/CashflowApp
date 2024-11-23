@@ -40,10 +40,10 @@
             <!--end:Menu item-->
 
             <!--begin:Menu item-->
-            <div class="menu-item py-2">
+            <div class="menu-item {{ request()->routeIs('app.schedule-transaction.index') ? 'here': null }} py-2">
                 <span class="menu-link menu-center">
                     <span class="menu-icon me-0">
-                        <a class="menu-link active" href="index.html">
+                        <a class="menu-link active" href="{{ route('app.schedule-transaction.index') }}">
                            <i class="ki-duotone ki-abstract-35 fs-2x">
                                <span class="path1"></span>
                                <span class="path2"></span>
