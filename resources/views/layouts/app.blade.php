@@ -139,6 +139,8 @@
 
     @include('includes.scripts')
 
+    @include('vendor.indicator.init-indicator')
+
 </body>
 
 

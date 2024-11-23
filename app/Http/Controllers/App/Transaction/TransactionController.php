@@ -18,6 +18,12 @@ use Illuminate\Http\Request;
 #[Attributes\Name('transaction', true, true)]
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setPageTitle('Transaction');
+    }
+
     /**
      * @return View
      * @throws \Exception
@@ -25,7 +31,6 @@ class TransactionController extends Controller
     #[Attributes\Get(uri: '', name: 'index')]
     public function index(): \Illuminate\Contracts\View\View
     {
-        $this->setPageTitle('Transaction');
         /** @var User $user */
         $user = auth()->user();
         $transactions = TransactionQuery::byUser($user->id)
@@ -66,6 +71,7 @@ class TransactionController extends Controller
         $user = auth()->user();
         (new CreateTransaction(user: $user, inputs: $request->input()))
             ->handle();
+        sendIndicator('SUCCESS', '', true)->duration(5000);
         return back();
     }
 
@@ -110,6 +116,8 @@ class TransactionController extends Controller
     {
         (new UpdateTransaction(transaction: $transaction, inputs: $request->input()))
             ->handle();
+        sendIndicator('SUCCESS', '', true)->duration(5000);
+
         return back();
     }
 }
