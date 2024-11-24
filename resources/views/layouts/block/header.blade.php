@@ -4,7 +4,7 @@
     <div class="container d-flex flex-stack">
         <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-            <a href="index.html">
+            <a href="#">
                 <img alt="Logo" src="{{ asset('media/logos/demo9.svg') }}" class="h-35px" />
             </a>
         </div>
@@ -129,7 +129,7 @@
 
                                 <!--begin::View more-->
                                 <div class="py-3 text-center border-top">
-                                    <a href="pages/user-profile/activity.html"
+                                    <a href="#"
                                         class="btn btn-color-gray-600 btn-active-color-primary">
                                         View All
                                         <i class="ki-duotone ki-arrow-right fs-5"><span class="path1"></span><span
@@ -222,7 +222,7 @@
 
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="account/overview.html" class="menu-link px-5">
+                            <a href="{{ route('app.profile.index') }}" class="menu-link px-5">
                                 My Profile
                             </a>
                         </div>
@@ -235,7 +235,7 @@
 
                         <!--begin::Menu item-->
                         <div class="menu-item px-5 my-1">
-                            <a href="account/settings.html" class="menu-link px-5">
+                            <a href="#" class="menu-link px-5">
                                 Settings
                             </a>
                         </div>

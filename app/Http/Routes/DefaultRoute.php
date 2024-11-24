@@ -21,4 +21,31 @@ class DefaultRoute extends BaseRoute
             return redirect()->route('auth.login');
         })->name('login');
     }
+
+    public function afterRegister(): void
+    {
+
+        menus()
+            ->setGroup(
+                name: 'profiles_tab',
+                group: 'profiles_tab',
+                menus: function ($menu) {
+                    return $this->menuProfile($menu);
+                }
+            );
+    }
+
+    protected function menuProfile($menu)
+    {
+        return $menu
+            ->addMenu(
+                title: __('Overview'),
+                routeName: 'app.profile.overview',
+                activeRouteName: 'app.profile.overview',
+            )/*->addMenu(
+                title: __('Setting'),
+                routeName: 'app.profile.setting',
+                activeRouteName: 'app.profile.setting*',
+            )*/;
+    }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2fb5578b6801df1d517af788d2cadfdb",
+    "content-hash": "d9b7e430e0f8f8220809e50c833bcdf2",
     "packages": [
         {
             "name": "archtechx/enums",
@@ -6691,6 +6691,58 @@
                 "source": "https://github.com/effortless-codes/indicators/tree/v1.0.1"
             },
             "time": "2023-11-16T06:33:07+00:00"
+        },
+        {
+            "name": "winatabayu00/laravel-menu-generator",
+            "version": "1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/effortless-codes/menus.git",
+                "reference": "ea27dc37f196f8810c4f0fe04bb0e5c5a15721df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/effortless-codes/menus/zipball/ea27dc37f196f8810c4f0fe04bb0e5c5a15721df",
+                "reference": "ea27dc37f196f8810c4f0fe04bb0e5c5a15721df",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "ext-json": "*",
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Winata\\Menu\\MenuServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "helpers.php"
+                ],
+                "psr-4": {
+                    "Winata\\Menu\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Winata bayu",
+                    "email": "winatabayu01@email.com"
+                }
+            ],
+            "description": "Laravel menu generator",
+            "support": {
+                "issues": "https://github.com/effortless-codes/menus/issues",
+                "source": "https://github.com/effortless-codes/menus/tree/v1.0.8"
+            },
+            "time": "2024-07-15T12:41:49+00:00"
         },
         {
             "name": "winatabayu00/package-based",
